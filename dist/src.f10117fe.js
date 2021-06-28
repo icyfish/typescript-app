@@ -117,9 +117,201 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"src/index.ts":[function(require,module,exports) {
+})({"src/linked-list/index.ts":[function(require,module,exports) {
 "use strict";
-},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var LinkNode =
+/** @class */
+function () {
+  function LinkNode(elem, next) {
+    this.elem = elem === undefined ? 0 : elem;
+    this.next = next === undefined ? null : next;
+  }
+
+  return LinkNode;
+}();
+
+var LinkedList =
+/** @class */
+function () {
+  function LinkedList() {
+    // 表头节点
+    this.head = null; // 是
+    // 私有变量, 存储数组长度
+
+    this.len = 0;
+  } // 添加一个节点
+
+
+  LinkedList.prototype.append = function (elem) {
+    var node = new LinkNode(elem);
+    var current;
+
+    if (this.head === null) {
+      this.head = node;
+    } else {
+      current = this.head; // 循环列表, 直到找到最后一项
+
+      while (current.next) {
+        current = current.next;
+      } // 找到最后一项, 将 next 值设置为传入的 node
+
+
+      current.next = node;
+    } // 更新长度
+
+
+    this.len++;
+  }; // 获取长度
+
+
+  LinkedList.prototype.size = function () {
+    return this.len;
+  }; // 在某个位置 (pos) 添加
+
+
+  LinkedList.prototype.insert = function (position, elem) {}; // 删除某个位置的元素
+
+
+  LinkedList.prototype.removeAt = function (position) {
+    // 检查合法性
+    var isValidPosition = position >= 0 && position < this.len;
+    if (!isValidPosition) return; //
+
+    var current = this.head;
+    var previous;
+    var index = 0;
+
+    if (position === 0) {// 移除第一项
+    } else {
+      while (index++ < position) {}
+    }
+  }; // public removeAt(pos: number) {
+  //   if (pos > -1 && pos < this.len) {
+  //     let current = this.head;
+  //     let previous;
+  //     let index = 0;
+  //     if (pos === 0) {
+  //       this.head = current.next;
+  //     } else {
+  //       while (index++ < pos) {
+  //         previous = current;
+  //         current = current.next;
+  //       }
+  //       previous.next = current.next;
+  //     }
+  //     this.len--;
+  //     return current.elem;
+  //   } else {
+  //     return null;
+  //   }
+  // }
+  // public insert(elem, pos) {
+  //   if (pos > -1 && pos < this.len) {
+  //     let current = this.head;
+  //     let index = 0;
+  //     let previous;
+  //     let node = new LinkNode(elem);
+  //     if (pos === 0) {
+  //       node.next = current;
+  //       this.head = node;
+  //     } else {
+  //       while (index++ < pos) {
+  //         previous = current;
+  //         current = current.next;
+  //       }
+  //       node.next = current;
+  //       previous.next = node;
+  //     }
+  //     this.len++;
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+
+  LinkedList.prototype.toString = function () {
+    var current = this.head;
+    var str = "";
+
+    while (current) {
+      str += current.elem; //output is undefinedundefinedundefined
+      // str += JSON.stringify(current);
+      // prints out {"next":{"next":{}}}{"next":{}}{}
+
+      current = current.next;
+    }
+
+    return str;
+  };
+
+  return LinkedList;
+}();
+
+exports.default = LinkedList;
+},{}],"src/index.ts":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var index_1 = __importDefault(require("./linked-list/index"));
+
+var t = new index_1.default();
+t.append(1); // Works fine
+
+t.append(3);
+t.append(2); // console.log(t); // LinkedList
+// let tt = t.removeAt(1);
+// console.log(t, "tt", tt); // LinkedList, 'tt', 1
+// t.insert("asd", 2);
+// let ttt = t.insert("a", 1);
+// console.log(ttt); // true
+
+console.log({
+  t: t
+}); // LinkedList
+// console.log(t.toString()); //asda0
+
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+//  输入：head = [1,3,2]
+//  输出：[2,3,1]
+//  0 <= 链表长度 <= 10000
+// class ListNode {
+//   val: number;
+//   next: ListNode | null;
+//   constructor(val?: number, next?: ListNode | null) {
+//     this.val = val === undefined ? 0 : val;
+//     this.next = next === undefined ? null : next;
+//   }
+// }
+// function reversePrint(head: ListNode | null): number[] {
+// }
+// let head = [1, 3, 2];
+// reversePrint(head)
+},{"./linked-list/index":"src/linked-list/index.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -147,7 +339,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63987" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65285" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
